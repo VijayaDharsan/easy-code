@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Editor from "./components/Editor";
 import { CloudDownload } from "@material-ui/icons";
-// import Button from "./components/Button";
-import { Modal,Box, Typography,Button } from '@material-ui/core'
+import { Modal, Box, Typography, Button, ThemeProvider, createMuiTheme } from '@material-ui/core'
 
 const App = () => {
   const [html, setHtml] = useState("");
   const [css, setCss] = useState("");
   const [js, setJs] = useState("");
   const [srcDoc, setSrcDoc] = useState("");
-  // const [popUp, setPopUp] = useState(false);
   const [open, setOpen] = useState(false)
 
-  const style = {
-    backgroundColor: 'red',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '20vw',
-    height: '15vh',
-    justifyContent:'center',
-    position: 'fixed',
-    inset: '0px 10px 0px 10px'
-  }
-
-  // const buttonClick = () => {
-  //   setPopUp(t => !t)
-  //   console.log("oen ", open)
-  //   setOpen(true)
-  //   console.log("oen ", open)
-  // }
-
+  const theme = createMuiTheme({
+    components: {
+      // Name of the component
+      MuiModal: {
+        styleOverrides: {
+          // Name of the slot
+          root: {
+            // Some CSS
+            backgroundColor: 'red',
+            fontSize: '10rem',
+          },
+        },
+      },
+    },
+  });
+  
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
 
@@ -93,29 +89,23 @@ const App = () => {
       <div>
           <button style={{position:'fixed', bottom:'10px', right:'20px'}} onClick={handleOpen}><CloudDownload /></button> {/**onClick={buttonClick} */}
           {
-            // popUp ? 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                className="modal-title"
-                style={{inset: 'none'}}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-            <Box sx={style}>
-                <Typography><Button onClick={() => {downloadTxtFile(1)}}>Download HTML</Button></Typography>
-                <Typography><Button onClick={() => {downloadTxtFile(2)}}>Download CSS</Button></Typography>
-                <Typography><Button onClick={() => {downloadTxtFile(3)}}>Download JS</Button></Typography>
-            </Box>
-            </Modal> //: null
-              // <Button open={open} onClose={handleClose}/> : null
-            // <div  className="hidden-div" id="show-butt"> {/**style={{display: 'flex', flexDirection: 'column'}} */}
-            //   <div className="pop-up">
-            //   <button key={1} onClick={() => {downloadTxtFile(1)}}>Download HTML</button>  
-            //   <button key={2} onClick={() => {downloadTxtFile(2)}}>Download CSS</button>  
-            //   <button key={3} onClick={() => {downloadTxtFile(3)}}>Download JS</button> 
-            // </div>
-            // </div> : null
+            <ThemeProvider theme={theme}>
+              <Modal
+                  open={open}
+                  onClose={handleClose}
+                  className="modal-title"
+                  style={{inset: 'none'}}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                  // hideBackdrop
+              >
+              <Box>
+                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(1)}}>Download HTML</Button></Typography>
+                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(2)}}>Download CSS</Button></Typography>
+                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(3)}}>Download JS</Button></Typography>
+              </Box>
+              </Modal>
+            </ThemeProvider>
           } 
         </div>
         <iframe
@@ -126,11 +116,6 @@ const App = () => {
           width="100%"
           height="100%"
         />
-        
-        
-        {/* <div className="button-below"> */}
-         
-      {/* </div> */}
       </div>
       
     </>
