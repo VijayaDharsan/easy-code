@@ -41,6 +41,8 @@ const App = () => {
     console.log("url download ", url)
     const link = document.createElement('a');
     link.href = url;
+
+    // We can make it as a different types of files (like html, css etc., )
     link.setAttribute('download', 'file.txt');  //Till there is pdf and doc aren't working....
     document.body.appendChild(link);
     link.click();
@@ -87,7 +89,7 @@ const App = () => {
       </div>
       <div className="pane">
       <div>
-          <button style={{position:'fixed', bottom:'10px', right:'20px'}} onClick={handleOpen}><CloudDownload /></button> {/**onClick={buttonClick} */}
+          <Button style={{position:'fixed', bottom:'10px', right:'20px', border: '1px solid #3d3d3d', borderRadius: '50%'}} onClick={handleOpen}><CloudDownload /></Button> {/**onClick={buttonClick} */}
           {
             <ThemeProvider theme={theme}>
               <Modal
