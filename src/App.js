@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Editor from "./components/Editor";
 import { CloudDownload } from "@material-ui/icons";
 import { Modal, Box, Typography, Button, ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { yellow } from "@material-ui/core/colors";
 
 const App = () => {
   const [html, setHtml] = useState("");
@@ -26,6 +27,19 @@ const App = () => {
     },
   });
   
+  const cloudButton = {
+    position: 'fixed',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: '10px',
+    right: '20px',
+    border: '1px solid #3d3d3d',
+    height: '35px',
+    width: '35px',
+    borderRadius: '5px'
+  }
+
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
 
@@ -89,25 +103,23 @@ const App = () => {
       </div>
       <div className="pane">
       <div>
-          <Button style={{position:'fixed', bottom:'10px', right:'20px', border: '1px solid #3d3d3d', borderRadius: '50%'}} onClick={handleOpen}><CloudDownload /></Button> {/**onClick={buttonClick} */}
+          <Button  style={cloudButton} onClick={handleOpen}><CloudDownload /></Button> {/**onClick={buttonClick} style={{position:'fixed', bottom:'10px', right:'20px', border: '1px solid #3d3d3d', borderRadius: '50%'}}*/}
           {
-            <ThemeProvider theme={theme}>
               <Modal
                   open={open}
                   onClose={handleClose}
                   className="modal-title"
-                  style={{inset: 'none'}}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
+                  style={{backgroundColor: "white"}}
+                  // aria-labelledby="modal-modal-title"
+                  // aria-describedby="modal-modal-description"
                   // hideBackdrop
               >
-              <Box>
-                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(1)}}>Download HTML</Button></Typography>
-                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(2)}}>Download CSS</Button></Typography>
-                  <Typography><Button className="button-class" onClick={() => {downloadTxtFile(3)}}>Download JS</Button></Typography>
+              <Box className="button-container">
+                  <div className="button" onClick={() => {downloadTxtFile(1)}}>Download HTML</div> 
+                  <div className="button" onClick={() => {downloadTxtFile(2)}}>Download CSS</div>
+                  <div className="button" onClick={() => {downloadTxtFile(3)}}>Download JS</div>
               </Box>
-              </Modal>
-            </ThemeProvider>
+            </Modal>
           } 
         </div>
         <iframe
